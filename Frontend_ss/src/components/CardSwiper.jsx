@@ -1,9 +1,17 @@
 import React from 'react'
+import Slider from 'react-slick';
 
 export default function CardSwiper() {
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1
+      };
   return (
     <>
-      <div className="w-[69vw] h-[25rem] overflow-hidden carousel  rounded-box gap-3">
+      <div className="w-[69vw] h-[25rem] carousel  rounded-box gap-3">
         <div className="carousel-item w-64">
             <div className="card w-96 bg-base-100 shadow-xl">
             <figure><img src="https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg" alt="Shoes" /></figure>
