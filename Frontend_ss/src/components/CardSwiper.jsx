@@ -11,7 +11,7 @@ export default function CardSwiper() {
       };
   return (
     <>
-      <div className="w-[69vw] h-[25rem] carousel  rounded-box gap-3">
+      <div className="w-[69.5vw] h-[25rem] carousel  rounded-box gap-3">
         <div className="carousel-item w-64">
             <div className="card w-96 bg-base-100 shadow-xl">
             <figure><img src="https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg" alt="Shoes" /></figure>

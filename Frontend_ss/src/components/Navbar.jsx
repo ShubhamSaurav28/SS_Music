@@ -1,12 +1,17 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/FirebaseContext';
+import { logoutUser } from '../Firebase';
 
 
 export default function Navbar() {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+    const { currentUser } = useAuth()
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     // Function to toggle the dropdown state
     const toggleDropdown = () => {
       setIsDropdownOpen(prevState => !prevState);
@@ -18,15 +23,29 @@ export default function Navbar() {
         setIsDropdownOpen(false);
       }
     };
+
+    const handleLogout = async () => {
+      try {
+        await logoutUser();
+      } catch (error) {
+        console.error('Error logging out:', error);
+      }
+    };
   
     // Add event listener to close dropdown on outside click
     // This will be executed only once when the component mounts
     useEffect(() => {
+      if(currentUser){
+        setIsLoggedIn(true);
+      }
+      else{
+        setIsLoggedIn(false);
+      }
       document.addEventListener('click', handleOutsideClick);
       return () => {
         document.removeEventListener('click', handleOutsideClick);
       };
-    }, []);
+    }, [currentUser]);
   
   return (
     <>
@@ -39,7 +58,7 @@ export default function Navbar() {
               <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
               <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                 {/* Sidebar content here */}
-                <li><a>Sidebar Item 1</a></li>
+                <li><Link to='/'>Home</Link></li>
                 <li><a>Sidebar Item 2</a></li>
               </ul>
             </div>
@@ -60,12 +79,28 @@ export default function Navbar() {
             <li><a>Playlist</a></li>
           </ul>
         </div>
-        <Link to='/login'>
+        {
+          isLoggedIn ? (<>
+          <div className="dropdown dropdown-end">
+            <div tabIndex={0} role="button" className=" m-1"><div className="avatar">
+            <div className="w-[3rem] rounded-full">
+              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            </div>
+          </div></div>
+            <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 gap-1">
+              <li><a className='p-2'>Profile</a></li>
+              <li><a className='p-2' onClick={handleLogout} >Logout</a></li>
+            </ul>
+          </div>
+            </>
+        ) : ( <><Link to='/login'>
         <button className="btn btn-outline">Login</button>
         </Link>
         <Link to='/signup'>
         <button className="btn btn-outline">SignUp</button>
-        </Link>
+        </Link></>)
+        }
+        
           {/* <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">

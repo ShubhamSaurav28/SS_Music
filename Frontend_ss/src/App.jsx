@@ -4,9 +4,12 @@ import Layout from './pages/Layout';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
+import { useAuth } from './context/FirebaseContext';
+import BlockedPath from './pages/BlockedPath';
 
 
 function App() {
+  const { currentUser } = useAuth();
 
   return (
     <>
@@ -14,8 +17,8 @@ function App() {
     <Routes>
     <Route path='/' element={<Layout/>}>
       <Route path='/' element={<HomePage/>}/>
-      <Route path='/login' element={<LoginPage/>}/>
-      <Route path='/signup' element={<SignUpPage/>}/>
+      {currentUser ? <Route path='/login' element={<BlockedPath/>}/> : <Route path='/login' element={<LoginPage/>}/>}
+      {currentUser ? <Route path='/signup' element={<BlockedPath/>}/> : <Route path='/signup' element={<SignUpPage/>}/>}
     </Route>
     </Routes>
     </BrowserRouter>
