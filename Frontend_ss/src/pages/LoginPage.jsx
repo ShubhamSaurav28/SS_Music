@@ -1,12 +1,24 @@
 import React, { useState } from 'react'
-import { loginUser } from '../Firebase';
+import { loginUser, loginWithGoogle } from '../Firebase';
 import { useNavigate } from 'react-router-dom';
+import search from '../assets/search.png'
 
 
 export default function LoginPage() {
   const [ email,setEmail ] = useState();
   const [ password,setPassword ] = useState();
   const navigate = useNavigate();
+
+  const handleGoogle = async () => {
+    try {
+        const userId = await loginWithGoogle();
+        console.log('Google sign-up triggered', userId);
+        navigate('/');
+    } catch (error) {
+        // Handle error if Google sign-up fails
+        console.error('Google sign-up error:', error);
+    }
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -35,7 +47,7 @@ export default function LoginPage() {
                 </div>
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text">Confirm Password</span>
+                    <span className="label-text">Password</span>
                   </label>
                   <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" placeholder="password" className="input input-bordered" required />
                   <label className="label">
@@ -46,6 +58,10 @@ export default function LoginPage() {
                   <button onClick={handleLogin} className="btn btn-primary">Login</button>
                 </div>
               </form>
+              <h1 className='mx-auto font-semibold'>OR</h1>
+              <div className="px-8 mt-6 mb-4">
+                  <button className="bg-white text-black text-xl w-full flex items-center font-semibold rounded-md hover:bg-slate-100" onClick={handleGoogle}><img src={search} className='h-[2rem] px-6 my-2'/>Login with Google</button>
+              </div>
             </div> 
     </>
   )

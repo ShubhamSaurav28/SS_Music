@@ -1,5 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
+import Card from './Card';
+import { getDownloadURL, getStorage, ref } from 'firebase/storage';
+import { getDocs, collection, getFirestore } from "firebase/firestore";
+import { app } from '../Firebase';
+
 
 export default function CardSwiper() {
     const settings = {
@@ -8,95 +13,41 @@ export default function CardSwiper() {
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 1
-      };
-  return (
-    <>
-      <div className="w-[69.5vw] h-[25rem] carousel  rounded-box gap-3">
-        <div className="carousel-item w-64">
-            <div className="card w-96 bg-base-100 shadow-xl">
-            <figure><img src="https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg" alt="Shoes" /></figure>
-            <div className="card-body">
-                <h2 className="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
-                <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-                </div>
+    };
+
+    const [songs, setSongs] = useState([]);
+
+    const storage = getStorage(app);
+    const firestore = getFirestore(app);
+
+    const getimageURL = async (path) => {
+      return await getDownloadURL(ref(storage,path))
+    }
+
+    useEffect(() => {
+      async function fetchData() {
+        try {
+          const allSongsSnapshot = await getDocs(collection(firestore, "songs"));
+          const allSongsData = allSongsSnapshot.docs.map(song => song.data());
+          setSongs(allSongsData);
+        } catch (error) {
+          console.error("Error fetching songs:", error);
+        }
+      }
+      
+      fetchData();
+    }, []); // Empty dependency array means this effect runs only once, similar to componentDidMount
+    
+
+    return (
+        <>
+            <div className="w-[69.5vw] h-[25rem] carousel rounded-box gap-3">
+                {/* Use songs.map() to render Card components */}
+                {songs.map((song, index) => (
+                    // Make sure to return the Card component here
+                    <Card key={index} song={song} getimageURL={getimageURL} />
+                ))}
             </div>
-            </div>
-        </div> 
-        <div className="carousel-item w-64">
-            <div className="card w-96 bg-base-100 shadow-xl">
-            <figure><img src="https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg" alt="Shoes" /></figure>
-            <div className="card-body">
-                <h2 className="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
-                <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-                </div>
-            </div>
-            </div>
-        </div> 
-        <div className="carousel-item w-64">
-            <div className="card w-96 bg-base-100 shadow-xl">
-            <figure><img src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg" alt="Shoes" /></figure>
-            <div className="card-body">
-                <h2 className="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
-                <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-                </div>
-            </div>
-            </div>
-        </div> 
-        <div className="carousel-item w-64">
-            <div className="card w-96 bg-base-100 shadow-xl">
-            <figure><img src="https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg" alt="Shoes" /></figure>
-            <div className="card-body">
-                <h2 className="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
-                <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-                </div>
-            </div>
-            </div>
-        </div> 
-        <div className="carousel-item w-64">
-            <div className="card w-96 bg-base-100 shadow-xl">
-            <figure><img src="https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg" alt="Shoes" /></figure>
-            <div className="card-body">
-                <h2 className="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
-                <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-                </div>
-            </div>
-            </div>
-        </div> 
-        <div className="carousel-item w-64">
-            <div className="card w-96 bg-base-100 shadow-xl">
-            <figure><img src="https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg" alt="Shoes" /></figure>
-            <div className="card-body">
-                <h2 className="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
-                <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-                </div>
-            </div>
-            </div>
-        </div> 
-        <div className="carousel-item w-64">
-            <div className="card w-96 bg-base-100 shadow-xl">
-            <figure><img src="https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg" alt="Shoes" /></figure>
-            <div className="card-body">
-                <h2 className="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
-                <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-                </div>
-            </div>
-            </div>
-        </div> 
-        </div>
-    </>
-  )
+        </>
+    );
 }

@@ -1,12 +1,13 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/FirebaseContext';
 import { logoutUser } from '../Firebase';
+import userimg from '../assets/userimg.png';
 
 
 export default function Navbar() {
-
+    const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const { currentUser } = useAuth()
@@ -27,6 +28,7 @@ export default function Navbar() {
     const handleLogout = async () => {
       try {
         await logoutUser();
+        navigate('/')
       } catch (error) {
         console.error('Error logging out:', error);
       }
@@ -59,7 +61,7 @@ export default function Navbar() {
               <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                 {/* Sidebar content here */}
                 <li><Link to='/'>Home</Link></li>
-                <li><a>Sidebar Item 2</a></li>
+                <li><Link to='/upload'>Upload Song</Link></li>
               </ul>
             </div>
           </div>
@@ -84,11 +86,11 @@ export default function Navbar() {
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className=" m-1"><div className="avatar">
             <div className="w-[3rem] rounded-full">
-              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              <img src={currentUser.photoURL?currentUser.photoURL:userimg} />
             </div>
           </div></div>
             <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 gap-1">
-              <li><a className='p-2'>Profile</a></li>
+              <li><Link to='/profile' className='p-2'>Profile</Link></li>
               <li><a className='p-2' onClick={handleLogout} >Logout</a></li>
             </ul>
           </div>
@@ -100,24 +102,6 @@ export default function Navbar() {
         <button className="btn btn-outline">SignUp</button>
         </Link></>)
         }
-        
-          {/* <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-              </div>
-            </div>
-            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow-xl menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li><a>Settings</a></li>
-              <li><a>Logout</a></li>
-            </ul>
-          </div> */}
           </div>
       </div>
     </>

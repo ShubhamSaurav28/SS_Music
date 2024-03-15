@@ -9,10 +9,10 @@ export default function Center() {
             <h1 className='text-2xl font-bold py-4'>Recommended Playlists</h1>
             <CardSwiper/>
         </div>
-        <div>
+        {/* <div>
         <h1 className='text-2xl font-bold py-4'>Recommended Artists</h1>
             <CardSwiper/>
-        </div>
+        </div> */}
       </div>
     </>
   )
