@@ -9,7 +9,7 @@ export default function ProfilePage() {
     const nulled = 'Null';
   return (
     <>
-      <div className="min-h-screen mt-8 w-[80%] mx-auto">
+      <div className="mt-8 w-[80%] mx-auto">
   <div className="flex-col">
     <img src={currentUser.photoURL?currentUser.photoURL:userimg} className="w-[10rem] rounded-lg shadow-2xl" alt='No image found' />
     <div className='mt-3'>

@@ -4,6 +4,7 @@ import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 import { app } from '../Firebase';
+import Loading from '../assets/Loading.gif';
 
 
 
@@ -15,6 +16,7 @@ export default function SongUploadPage() {
     const [description, setDescription] = useState('');
     const [imageFile, setImageFile] = useState(null);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const { currentUser } = getAuth();
 
@@ -33,6 +35,10 @@ export default function SongUploadPage() {
           alert('Please fill in all fields');
           return;
         }
+        if(!currentUser){
+          alert('Please login');
+          return;
+        }
     
         // Initialize Firebase Storage
         const storage = getStorage(app);
@@ -46,6 +52,7 @@ export default function SongUploadPage() {
     
         try {
           // Upload song file and image file to Firebase Storage
+          setLoading(true);
           const uploadsong = await uploadBytes(songRef, songFile)
           const uploadimage = await uploadBytes(imageRef, imageFile)
           const docref = await addDoc(collection( firestore, 'songs'),{
@@ -61,13 +68,13 @@ export default function SongUploadPage() {
           });
           console.log(docref);
           alert('Song uploaded successfully!');
+          setLoading(false);
           // Clear form fields
           setSongFile(null);
           setSongName('');
           setArtistName('');
           setDescription('');
           setImageFile(null);
-          navigate('/')
         } catch (error) {
           console.error('Error uploading song:', error);
           alert('Error uploading song. Please try again.');
@@ -75,8 +82,8 @@ export default function SongUploadPage() {
       };
 
   return (
-    <>
-        <div className='w-[80vw] mx-auto mb-5 mt-3'>
+    <>  
+        {loading?<img className='mx-auto my-[10rem]' src={Loading}></img>:<div className='w-[80vw] mx-auto mb-5 mt-3'>
               <form onSubmit={handleSubmit} className=" w-full gap-4">
               <div className="form-control">
                   <label className="label">
@@ -116,6 +123,7 @@ export default function SongUploadPage() {
                 </div>
               </form>
               </div>
+              }
     </>
   )
 }

@@ -12,7 +12,26 @@
 
 body::-webkit-scrollbar{
   display: none;
+  position: relative;
 }
+
+audio{
+  padding-right: 10px;
+}
+
+audio::-webkit-media-controls-panel{
+  background-color: #282a36;
+}
+
+.aud {
+  border-top: 1px solid #202020;
+  -webkit-box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.5); /* Increase the spread radius further */
+  -moz-box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.5);
+}
+
+
+
 
 
 

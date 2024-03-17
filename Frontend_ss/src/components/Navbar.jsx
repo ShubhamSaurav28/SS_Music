@@ -24,15 +24,6 @@ export default function Navbar() {
         setIsDropdownOpen(false);
       }
     };
-
-    const handleLogout = async () => {
-      try {
-        await logoutUser();
-        navigate('/')
-      } catch (error) {
-        console.error('Error logging out:', error);
-      }
-    };
   
     // Add event listener to close dropdown on outside click
     // This will be executed only once when the component mounts
@@ -49,6 +40,15 @@ export default function Navbar() {
       };
     }, [currentUser]);
   
+    const handleLogout = async () => {
+      try {
+        await logoutUser();
+        navigate('/')
+      } catch (error) {
+        console.error('Error logging out:', error);
+      }
+    };
+    
   return (
     <>
       <div className="navbar bg-base-100 relative">

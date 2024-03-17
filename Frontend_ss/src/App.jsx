@@ -9,6 +9,7 @@ import BlockedPath from './pages/BlockedPath';
 import SongUploadPage from './pages/SongUploadPage';
 import React, { Suspense } from 'react';
 import Loading from './assets/Loading.gif';
+import SongPage from './pages/SongPage';
 
 const ProfilePage = React.lazy(() => import('./pages/ProfilePage'))
 
@@ -26,6 +27,7 @@ function App() {
       {currentUser ? <Route path='/signup' element={<BlockedPath/>}/> : <Route path='/signup' element={<SignUpPage/>}/>}
       <Route path='/upload' element={<SongUploadPage/>}/>
       {currentUser ? <Route path='/profile' element={<ProfilePage/>}/> : <Route path='/profile' element={<BlockedPath/>}/>}
+      <Route path="/song/:songId" element={<SongPage/>}/>
     </Route>
     </Routes>
     </Suspense>

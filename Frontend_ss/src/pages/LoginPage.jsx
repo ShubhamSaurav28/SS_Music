@@ -36,7 +36,7 @@ export default function LoginPage() {
 
   return (
     <>
-        <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100 mx-auto my-[4rem] z-20">
+        <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100 mx-auto my-[3rem] z-20">
         <h1 className='mx-auto text-2xl font-bold mt-3'>Login</h1>
               <form onSubmit={handleLogin} className="card-body w-full">
               <div className="form-control">

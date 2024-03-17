@@ -1,25 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Import useState and useEffect hooks
 import { getDownloadURL, getStorage, ref } from 'firebase/storage'; // Import necessary Firebase storage functions
 import { Link, useNavigate } from 'react-router-dom';
 import { app } from '../Firebase';
 
-
-export default function Card(props) {
-    const descriptionWords = props.description.split(' ');
-    const truncatedDescription = descriptionWords.slice(0, 12).join(' ');
+export default function ListCard(props) {
     const [imgURL, setImageURL] = useState(null);
     const storage = getStorage(app);
 
-
     const getimageURL = async (path) => {
         return await getDownloadURL(ref(storage,path))
-      }
+    }
 
     useEffect(() => {
         const fetchImageURL = async () => {
             try {
                 const imageURL = await getimageURL(props.imageURL); // Call the passed getimageURL function
-                console.log(props.imageURL)
                 setImageURL(imageURL);
             } catch (error) {
                 console.error("Error fetching image URL:", error);
@@ -29,16 +24,17 @@ export default function Card(props) {
     }, [getimageURL, props.imageURL]); // Include getimageURL and props.imageURL in the dependency array
 
     return (
-        <Link to={`/song/${props.id}`}>
-        <div className="carousel-item w-64 cursor-pointer hover:opacity-75 duration-300 rounded-md">
-            <div className="card h-full w-96 bg-base-100 shadow-xl">
-                <img className='h-48 rounded-md' src={imgURL} alt={props.name} />
-                <div className="card-body h-48">
-                    <h2 className="card-title text-xl">{props.songName}</h2>
-                    <p>{truncatedDescription}...</p>
-                </div>
+        <div>
+            <div className="gap-4 py-2 flex px-6 avatar">
+                <Link to={`/song/${props.id}`}>
+                    <div className='flex items-center gap-3'>
+                    <div className="w-10 items-center">
+                        <img className=' rounded-full' src={imgURL} alt="Song" />
+                    </div>
+                    <h1 className='text-lg'>{props.songName}</h1>
+                    </div>
+                </Link>
             </div>
         </div>
-        </Link>
-    );
+    )
 }
