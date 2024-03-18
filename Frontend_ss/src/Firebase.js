@@ -84,6 +84,7 @@ const logoutUser = async () => {
   try {
     await signOut(auth);
     console.log('User logged out successfully');
+    return true;
   } catch (error) {
     console.error('Error logging out:', error);
     throw error;

@@ -25,11 +25,11 @@ export default function ListCard(props) {
 
     return (
         <div>
-            <div className="gap-4 py-2 flex px-6 avatar">
+            <div className="gap-4 py-2 flex px-6 avatar hover:opacity-80">
                 <Link to={`/song/${props.id}`}>
                     <div className='flex items-center gap-3'>
                     <div className="w-10 items-center">
-                        <img className=' rounded-full' src={imgURL} alt="Song" />
+                        <img src={imgURL} alt="Song" />
                     </div>
                     <h1 className='text-lg'>{props.songName}</h1>
                     </div>

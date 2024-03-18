@@ -19,7 +19,6 @@ export default function Card(props) {
         const fetchImageURL = async () => {
             try {
                 const imageURL = await getimageURL(props.imageURL); // Call the passed getimageURL function
-                console.log(props.imageURL)
                 setImageURL(imageURL);
             } catch (error) {
                 console.error("Error fetching image URL:", error);

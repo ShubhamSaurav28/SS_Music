@@ -25,7 +25,7 @@ export default function LoginPage() {
     try {
       // Call loginUser function to sign in user
       const userId = await loginUser(email, password);
-      console.log('User logged in with UID:', userId);
+      // console.log('User logged in with UID:', userId);
       navigate('/');
       // Handle successful login (e.g., redirect to home page)
     } catch (error) {

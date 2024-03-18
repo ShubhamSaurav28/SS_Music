@@ -28,7 +28,7 @@ export default function SongPage() {
   const handlePlay = () => {
     if(currentUser){
       if (songURL) {
-        firstPlay(songURL,song,imgURL); // Pass the song URL to playSong function
+        firstPlay(songURL,song,imgURL,songId); // Pass the song URL to playSong function
       } else {
         console.error("Song URL is not available.");
       }
@@ -55,7 +55,6 @@ export default function SongPage() {
           // Fetch song URL from Firebase Storage
           const songURL = await getDownloadURL(ref(storage, songData.songURL));
           setSongURL(songURL);
-          console.log(songURL);
         } else {
           console.log('No such document!');
         }
@@ -73,9 +72,9 @@ export default function SongPage() {
 
   return (
     <div>
-      <div className='flex h-[full]'>
+      <div className='flex h-[full] mx-auto flex-wrap w-[90vw]'>
         {imgURL ?
-          <img className='ml-[4rem] mt-[3rem] h-full rounded-md shadow-2xl' src={imgURL} alt={song.songName} /> : <img className='h-[20px]' src={Loading} />
+          <img className='ml-[4rem] mt-[3rem] h-[12rem] rounded-md shadow-2xl' src={imgURL} alt={song.songName} /> : <img className='h-[20px]' src={Loading} />
         }
         <div className='ml-[3rem] py-[4rem] '>
           <h1 className='font-bold text-3xl'>{song.songName}</h1>

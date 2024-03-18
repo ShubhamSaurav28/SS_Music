@@ -39,7 +39,7 @@ export default function CardSwiper() {
 
     return (
         <>
-            <div className="w-[69.5vw] h-[25rem] carousel rounded-box gap-3">
+            <div className="w-[74vw] h-[25rem] carousel rounded-box gap-3">
                 {/* Use songs.map() to render Card components */}
                 {songs.length > 0? songs.map((song, index) => (
                     // Make sure to return the Card component here
