@@ -4,11 +4,13 @@ import { useAuth } from '../context/FirebaseContext';
 import { logoutUser } from '../Firebase';
 import userimg from '../assets/userimg.png';
 
-export default function Navbar() {
+export default function Navbar({handleSearch}) {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { currentUser } = useAuth();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [search, setSearch] = useState(null);
+
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prevState) => !prevState);
@@ -19,6 +21,13 @@ export default function Navbar() {
       setIsDropdownOpen(false);
     }
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent default form submission
+    handleSearch(search); // Call handleSearch function passed from props
+    navigate('/search-results'); // Navigate to the search results page
+  };
+
 
   useEffect(() => {
     if (currentUser) {
@@ -59,16 +68,29 @@ export default function Navbar() {
               <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
             </svg>
           </label>
-          <div className="drawer-side z-20">
+          <div className="drawer-side z-30">
             <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-            <ul className="menu p-4 w-60 min-h-full bg-base-200 text-base-content">
+            <ul className="menu p-4 w-52 min-h-full bg-base-200 text-base-content">
               <li>
                 <Link to="/">Home</Link>
               </li>
               <li>
                 <Link to="/upload">Upload Song</Link>
               </li>
+              {isLoggedIn ? (
+                <></>
+                ) : (
+                  <li>
+                    <Link to="/login">
+                      <button className="btn btn-outline md:hidden w-[6rem]">Login</button>
+                    </Link>
+                    <Link to="/signup">
+                      <button className="btn btn-outline md:hidden w-[6rem]">SignUp</button>
+                    </Link>
+                  </li>
+                )}
             </ul>
+            
           </div>
         </div>
       </div>
@@ -79,9 +101,11 @@ export default function Navbar() {
       </div>
       <div className="navbar-end flex items-center">
         <div className="form-control hidden md:block">
-          <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+          <form  onSubmit={handleSubmit}>
+          <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+          </form>
         </div>
-        <div className="dropdown dropdown-hover hidden md:block">
+        <div className="dropdown dropdown-hover ml-2 hidden md:block">
           <div tabIndex={0} role="button" className="btn m-1">
             Filter
           </div>
@@ -89,12 +113,12 @@ export default function Navbar() {
             <li>
               <a>Songs</a>
             </li>
-            <li>
+            {/* <li>
               <a>Artist</a>
             </li>
             <li>
               <a>Playlist</a>
-            </li>
+            </li> */}
           </ul>
         </div>
         {isLoggedIn ? (
@@ -121,11 +145,11 @@ export default function Navbar() {
           </div>
         ) : (
           <>
-            <Link to="/login">
+            <Link to="/login" className='mx-2 hidden md:block'>
               <button className="btn btn-outline">Login</button>
             </Link>
             <Link to="/signup">
-              <button className="btn btn-outline">SignUp</button>
+              <button className="btn btn-outline hidden md:block">SignUp</button>
             </Link>
           </>
         )}

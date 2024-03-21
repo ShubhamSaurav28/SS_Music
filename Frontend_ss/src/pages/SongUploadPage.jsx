@@ -56,7 +56,7 @@ export default function SongUploadPage() {
           const uploadsong = await uploadBytes(songRef, songFile)
           const uploadimage = await uploadBytes(imageRef, imageFile)
           const docref = await addDoc(collection( firestore, 'songs'),{
-            songName,
+            songName: songName.toLowerCase(),
             artistName,
             description,
             imageURL: uploadimage.ref.fullPath,
@@ -66,7 +66,6 @@ export default function SongUploadPage() {
             email: currentUser.email,
             photoURL: currentUser.photoURL
           });
-          console.log(docref);
           alert('Song uploaded successfully!');
           setLoading(false);
           // Clear form fields
@@ -104,18 +103,18 @@ export default function SongUploadPage() {
                   <textarea value={description} onChange={(e)=>setDescription(e.target.value)} type="description" placeholder="Description" className="textarea textarea-bordered textarea-lg w-full px-3 py-2" required />
                 </div>
                 
-                <div className="form-control flex flex-row mt-2">
-                    <div className='w-[40vw]'>
+                <div className="form-control flex flex-col md:flex-row mt-2">
+                    <div className='md:w-full'>
                         <label className="label">
                         <span className="label-text">Choose the Song</span>
                         </label>
-                        <input type="file" onChange={handleFileChange} accept="audio/*" className='file-input file-input-bordered' required />
+                        <input type="file" onChange={handleFileChange} accept="audio/*" className='max-w-[80vw] file-input file-input-bordered' required />
                     </div>
-                    <div className='w-[40vw]'>
+                    <div className='md:w-full'>
                     <label className="label">
                         <span className="label-text">Choose the Image</span>
                         </label>
-                        <input type="file" onChange={handleImageChange} accept="image/*" className='file-input file-input-bordered' required />
+                        <input type="file" onChange={handleImageChange} accept="image/*" className='max-w-[80vw] file-input file-input-bordered' required />
                     </div>
                 </div>
                 <div className="form-control mt-6">

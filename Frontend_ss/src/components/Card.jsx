@@ -10,6 +10,9 @@ export default function Card(props) {
     const [imgURL, setImageURL] = useState(null);
     const storage = getStorage(app);
 
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      };
 
     const getimageURL = async (path) => {
         return await getDownloadURL(ref(storage,path))
@@ -33,7 +36,7 @@ export default function Card(props) {
             <div className="card h-full w-96 bg-base-100 shadow-xl">
                 <img className='h-48 rounded-md' src={imgURL} alt={props.name} />
                 <div className="card-body h-48">
-                    <h2 className="card-title text-xl">{props.songName}</h2>
+                    <h2 className="card-title text-xl">{capitalizeFirstLetter(props.songName)}</h2>
                     <p>{truncatedDescription}...</p>
                 </div>
             </div>

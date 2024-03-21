@@ -11,6 +11,10 @@ export default function ListCard(props) {
         return await getDownloadURL(ref(storage,path))
     }
 
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    };
+
     useEffect(() => {
         const fetchImageURL = async () => {
             try {
@@ -31,7 +35,7 @@ export default function ListCard(props) {
                     <div className="w-10 items-center">
                         <img src={imgURL} alt="Song" />
                     </div>
-                    <h1 className='text-lg'>{props.songName}</h1>
+                    <h1 className='text-lg'>{capitalizeFirstLetter(props.songName)}</h1>
                     </div>
                 </Link>
             </div>

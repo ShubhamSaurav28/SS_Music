@@ -30,7 +30,7 @@ export default function SideBar() {
     <>
         <div className="rounded-lg overflow-x-auto w-[24rem] mr-5 ml-5">
         <ul className="menu bg-base-200 rounded-box">
-            <h1 className='text-xl px-4 py-2 font-bold'>Recommend songs</h1>
+            <h1 className='text-xl px-4 py-2 font-bold'>Recommend Songs</h1>
             {songs.length > 0? songs.map((song, index) => (
                 <ListCard key={index} id={song.id} {...song.data()}/>
             )):<img className='mx-auto h-[5rem] my-auto' src={Loading} />}

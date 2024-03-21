@@ -78,7 +78,7 @@ export default function SignUpPage() {
                 </div>
               </form>
               <h1 className='mx-auto font-semibold'>OR</h1>
-              <div className="px-8 mt-6 mb-4">
+              <div className="px-8 mt-6 mb-4 ">
                   <button className="bg-white text-black text-xl w-full flex items-center font-semibold rounded-md hover:bg-slate-100" onClick={handleGoogle}><img src={search} className='h-[2rem] px-6 my-2'/>Login with Google</button>
               </div>
             </div> 

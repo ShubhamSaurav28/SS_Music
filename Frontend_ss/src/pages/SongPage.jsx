@@ -39,6 +39,11 @@ export default function SongPage() {
     
   };
 
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   useEffect(() => {
     const fetchSongData = async () => {
       try {
@@ -72,17 +77,17 @@ export default function SongPage() {
 
   return (
     <div>
-      <div className='flex h-[full] mx-auto flex-wrap w-[90vw]'>
+      <div className='flex h-[full] mx-auto flex-wrap md:flex-nowrap w-[90vw]'>
         {imgURL ?
           <img className='ml-[4rem] mt-[3rem] h-[12rem] rounded-md shadow-2xl' src={imgURL} alt={song.songName} /> : <img className='h-[20px]' src={Loading} />
         }
-        <div className='ml-[3rem] py-[4rem] '>
-          <h1 className='font-bold text-3xl'>{song.songName}</h1>
-          <p className='py-5'>{song.description}</p>
+        <div className='ml-[3rem] py-[4rem] mr-[2rem] '>
+          <h1 className='font-bold text-3xl'>{capitalizeFirstLetter(song.songName)}</h1>
+          <p className='py-5 '>{song.description}</p>
           <h2><b>Artist:</b> {song.artistName}</h2>
         </div>
       </div>
-      <div className='h-[10rem]'>
+      <div className='h-[12rem]'>
         <button className=' float-end mr-[8rem] btn btn-success' onClick={handlePlay}>Play <img className='h-full py-2' src={Play} alt="play" /></button>
       </div>
     </div>

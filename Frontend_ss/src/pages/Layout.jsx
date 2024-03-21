@@ -5,11 +5,11 @@ import Footer from '../components/Footer'
 import SongDashboard from '../components/SongDashboard'
 import { useAuth } from '../context/FirebaseContext'
 
-export default function Layout() {
+export default function Layout({handleSearch}) {
   const { currentUser } = useAuth();
   return (
     <>
-        <Navbar/>
+        <Navbar handleSearch={handleSearch}/>
         <Outlet/> 
         {/* <Footer/> */}
         {currentUser?<SongDashboard/>:<div></div>}
